@@ -13,8 +13,9 @@ clock = pygame.time.Clock()
 # размер окна
 heightY = 800
 widthX = 600
+
 # количество точек
-kolvo = 10
+kolvo = 100
 
 # инициализация размера окна
 screen = pygame.display.set_mode((heightY, widthX))
@@ -40,6 +41,11 @@ class tPoint():
         self.dx = randrange(-1, 2)
         self.dy = randrange(-1, 2)
 
+        while (self.dx or self.dy) == 0:
+            self.dx = randrange(-1, 2)
+            self.dy = randrange(-1, 2)
+
+
         self.size = size
         self.screen = screen
         self.draw()
@@ -47,7 +53,6 @@ class tPoint():
     # метод отображения точек
     def draw(self):
         pygame.draw.circle(self.screen, self.color, [self.X, self.Y], self.size)
-
 
     def set_new_position(self):
 
