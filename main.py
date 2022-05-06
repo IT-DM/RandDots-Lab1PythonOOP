@@ -3,7 +3,7 @@ from random import*
 import random as rd
 
 pygame.init()
-pygame.display.set_caption('Рандомные точки с управлением')
+pygame.display.set_caption('Случайные точки с управлением')
 
 # скорость движения объекта
 run = True
@@ -21,7 +21,7 @@ kolvo = 100
 # инициализация размера окна
 screen = pygame.display.set_mode((heightY, widthX))
 
-class GameManager:
+class Manager:
     def __init__(self, game_window, array):
         self.game_window = game_window
         self.array = array
@@ -34,7 +34,7 @@ class GameManager:
 # класс параметров точки
 class tPoint():
     def __init__(self, screen, color, X, Y, size):
-        # присвоение рандомного размера, цвета и позиции
+        # переменные случайного размера, цвета и позиции
         self.color = color
         self.X = X
         self.Y = Y
@@ -59,19 +59,20 @@ class tPoint():
                 self.dx = randrange(-1, 2)
                 self.dy = randrange(-1, 2)
 
-        # проверка на ударение в Y стену
-        if self.Y > (600 - self.size) or self.Y < self.size:
-            # смена траектории
-            self.dy *= -1
-            self.dx = randrange(-5, 5)
-        # проверка на ударение в X стену
-        if self.X > (800 - self.size) or self.X < self.size:
-            # смена траектории
-            self.dx *= -1
-            self.dy = randrange(-5, 5)
+            # проверка на ударение в Y стену
+            if self.Y > (600 - self.size) or self.Y < self.size:
+                # смена траектории
+                self.dy *= -1
+                self.dx = randrange(-5, 5)
+            # проверка на ударение в X стену
+            if self.X > (800 - self.size) or self.X < self.size:
+                # смена траектории
+                self.dx *= -1
+                self.dy = randrange(-5, 5)
 
-        # события по нажатию клавиш
+        # если событие по нажатию клавиш
         if event.type == pygame.KEYDOWN:
+            # остановка движения
             self.dx = 0
             self.dy = 0
             if event.key == pygame.K_UP:
@@ -86,14 +87,15 @@ class tPoint():
             if event.key == pygame.K_LEFT:
                 self.X -= 1
                 print("Key LEFT has been pressed")
+
             # возвращение точек в другой конец экрана
             if self.Y >= (600 - self.size):
-                self.Y = 0 + self.size
-            if self.X >= (800 - self.size):
-                self.X = 0 + self.size
-            if self.Y == 0:
+                self.Y = self.size + 1
+            if self.X >= 800 - self.size:
+                self.X = self.size + 1
+            if self.Y <= 0 + self.size:
                 self.Y = 600 - self.size
-            if self.X == 0:
+            if self.X <= self.size:
                 self.X = 800 - self.size
 
         # движение
@@ -102,7 +104,7 @@ class tPoint():
         # перерисовка
         self.draw()
 
-# метод для рандомного цвета точки
+# метод для случайного цвета точки
 def random_color():
     r = rd.randint(0, 255)
     g = rd.randint(0, 255)
@@ -113,14 +115,14 @@ myArray = []
 
 # запись в массив
 for i in range(kolvo):
-    # рандомные координаты для каждого элемента массива
+    # случайные координаты для каждого элемента массива
     X = randint(30, widthX - 30)
     Y = randint(30, heightY - 30)
     color = random_color()
     myArray.append(tPoint(screen, color, Y, X, randint(5, 15)))
     print('Обьекты в массиве:', myArray, "\n")
 
-manager = GameManager(screen, myArray)
+manager = Manager(screen, myArray)
 
 # при запуске программы
 while run:
