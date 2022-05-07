@@ -1,4 +1,4 @@
-# Импорт библиотеки Pygame
+# Импорт библиотеки Pygame, random
 import pygame
 from random import*
 import random as rd
@@ -85,16 +85,16 @@ class tPoint():
             self.dy = 0
             if event.key == pygame.K_UP:
                 self.Y -= 1
-                print("Key UP has been pressed")
+                print("Нажата клавиша вверх")
             if event.key == pygame.K_DOWN:
                 self.Y += 1
-                print("Key DOWN has been pressed")
+                print("Нажата клавиша вниз")
             if event.key == pygame.K_RIGHT:
                 self.X += 1
-                print("Key RIGHT has been pressed")
+                print("Нажата клавиша вправо")
             if event.key == pygame.K_LEFT:
                 self.X -= 1
-                print("Key LEFT has been pressed")
+                print("Нажата клавиша влево")
 
             # возвращение точек в другой конец экрана
             if self.Y >= (widthX - self.size):
